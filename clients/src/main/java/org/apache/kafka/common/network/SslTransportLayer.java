@@ -564,6 +564,7 @@ public class SslTransportLayer implements TransportLayer {
                 netReadBuffer.flip();
                 SSLEngineResult unwrapResult;
                 try {
+                    appReadBuffer = Utils.ensureCapacity(appReadBuffer, netReadBufferSize());
                     unwrapResult = sslEngine.unwrap(netReadBuffer, appReadBuffer);
                     if (state == State.POST_HANDSHAKE && appReadBuffer.position() != 0) {
                         // For TLSv1.3, we have finished processing post-handshake messages since we are now processing data
